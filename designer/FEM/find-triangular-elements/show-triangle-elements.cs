@@ -1,7 +1,9 @@
-using System.ComponentModel;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using Napa.Gui;
-using Napa.Core.Steel;
+using System.Text;
+using System.Windows.Media;
+using Napa.Graphics;
 using Napa.Scripting;
 
 /// <summary>
@@ -22,11 +24,15 @@ using Napa.Scripting;
 
 public class ShowTringularElements : ScriptBase {
 
-    
-    public override void Run() {    
-        // ...
+    public override void Run() {
+        Graphics.Erase();        
+        var style = new StyleAttributes() { FaceColor = Colors.Red };
+        foreach (var element in FEM.Manager.CurrentModel.Elements) {
+            if (element.Nodes.Count == 3) {
+                Graphics.OverrideStyle("FEM@E:" + element.Number, style);
+            }
+        }
+        Graphics.UpdateView();
     }
-    
-  
 }
     
